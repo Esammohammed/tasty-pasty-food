@@ -21,14 +21,15 @@ app.get('/meals', async (req, res) => {
 });
 
 app.post('/orders', async (req, res) => {
+  
   const orderData = req.body.order;
-
-  if (orderData === null || orderData.items === null || orderData.items === []) {
+  console.log(orderData);
+  if (orderData === null || orderData.items === null || orderData.items.length === 0) {
     return res
       .status(400)
       .json({ message: 'Missing data.' });
   }
-
+  console.log('no missing items ');
   if (
     orderData.customer.email === null ||
     !orderData.customer.email.includes('@') ||
@@ -46,6 +47,7 @@ app.post('/orders', async (req, res) => {
         'Missing data: Email, name, street, postal code or city is missing.',
     });
   }
+  console.log('no missing customer data');
 
   const newOrder = {
     ...orderData,
